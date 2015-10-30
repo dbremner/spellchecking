@@ -7,17 +7,11 @@
 
 // SampleSpellingClient.cpp : Implementation of a sample spell checking client
 
+#include "stdafx.h"
 #include "onspellcheckerchanged.h"
 #include "util.h"
 #include "spellprint.h"
 #include "commands.h"
-
-#include <spellcheck.h>
-#include <stdio.h>
-#include <objidl.h>
-#include <fcntl.h>
-#include <io.h>
-#include <strsafe.h>
 
 HRESULT RunCommandLoop(_In_ ISpellChecker* spellChecker)
 {
