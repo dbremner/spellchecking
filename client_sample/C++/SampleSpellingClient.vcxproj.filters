@@ -1,19 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="commands.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="onspellcheckerchanged.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="spellprint.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="util.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="commands.h" />
+    <ClInclude Include="onspellcheckerchanged.h" />
+    <ClInclude Include="spellprint.h" />
+    <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SampleSpellingClient.cpp" />
@@ -21,10 +13,5 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resources.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Headers">
-      <UniqueIdentifier>{f11c579a-8993-4410-b4bc-5105bd2d4c91}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>
