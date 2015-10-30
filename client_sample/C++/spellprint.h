@@ -60,7 +60,7 @@ inline HRESULT PrintSpellingError(_In_ ISpellChecker* spellChecker, _In_ PCWSTR 
     if (SUCCEEDED(hr))
     {
         wchar_t misspelled[MAX_PATH];
-        hr = StringCchCopyN(misspelled, ARRAYSIZE(misspelled), text + startIndex, errorLength);
+        hr = StringCchCopyN(misspelled, _countof(misspelled), text + startIndex, errorLength);
 
         if (SUCCEEDED(hr))
         {

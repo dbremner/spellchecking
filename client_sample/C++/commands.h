@@ -66,7 +66,7 @@ inline HRESULT ReadText(_In_ PCWSTR buffer, const size_t maxTextSize, _Out_write
 inline HRESULT AddCommand(_In_ ISpellChecker* spellChecker, _In_ PCWSTR buffer)
 {
     wchar_t word[MAX_PATH];
-    HRESULT hr = ReadSingleWord(buffer, ARRAYSIZE(word), word);
+    HRESULT hr = ReadSingleWord(buffer, _countof(word), word);
     if (SUCCEEDED(hr))
     {
         hr = spellChecker->Add(word);
@@ -78,7 +78,7 @@ inline HRESULT AddCommand(_In_ ISpellChecker* spellChecker, _In_ PCWSTR buffer)
 inline HRESULT IgnoreCommand(_In_ ISpellChecker* spellChecker, _In_ PCWSTR buffer)
 {
     wchar_t word[MAX_PATH];
-    HRESULT hr = ReadSingleWord(buffer, ARRAYSIZE(word), word);
+    HRESULT hr = ReadSingleWord(buffer, _countof(word), word);
     if (SUCCEEDED(hr))
     {
         hr = spellChecker->Ignore(word);
@@ -91,7 +91,7 @@ inline HRESULT AutoCorrectCommand(_In_ ISpellChecker* spellChecker, _In_ PCWSTR 
 {
     wchar_t from[MAX_PATH];
     wchar_t to[MAX_PATH];
-    HRESULT hr = ReadTwoWords(buffer, ARRAYSIZE(from), from, ARRAYSIZE(to), to);
+    HRESULT hr = ReadTwoWords(buffer, _countof(from), from, _countof(to), to);
     if (SUCCEEDED(hr))
     {
         hr = spellChecker->AutoCorrect(from, to);
@@ -104,7 +104,7 @@ inline HRESULT CheckCommand(_In_ ISpellChecker* spellChecker, _In_ PCWSTR buffer
 {
     wchar_t text[MAX_PATH];
     IEnumSpellingError* enumSpellingError = nullptr;
-    HRESULT hr = ReadText(buffer, ARRAYSIZE(text), text);
+    HRESULT hr = ReadText(buffer, _countof(text), text);
     if (SUCCEEDED(hr))
     {
         hr = spellChecker->Check(text, &enumSpellingError);
@@ -122,7 +122,7 @@ inline HRESULT CheckAsYouTypeCommand(_In_ ISpellChecker* spellChecker, _In_ PCWS
 {
     wchar_t text[MAX_PATH];
     IEnumSpellingError* enumSpellingError = nullptr;
-    HRESULT hr = ReadText(buffer, ARRAYSIZE(text), text);
+    HRESULT hr = ReadText(buffer, _countof(text), text);
     if (SUCCEEDED(hr))
     {
         hr = spellChecker->ComprehensiveCheck(text, &enumSpellingError);

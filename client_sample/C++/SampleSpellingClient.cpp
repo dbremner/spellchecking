@@ -28,12 +28,12 @@ HRESULT RunCommandLoop(_In_ ISpellChecker* spellChecker)
     {
         wprintf(L"> ");
         wchar_t line[MAX_PATH];
-        hr = StringCchGets(line, ARRAYSIZE(line));
+        hr = StringCchGets(line, _countof(line));
         
         if (SUCCEEDED(hr))
         {
             wchar_t command[MAX_PATH];
-            int count = swscanf_s(line, L"%s", command, static_cast<unsigned int>(ARRAYSIZE(command)));
+            int count = swscanf_s(line, L"%s", command, static_cast<unsigned int>(_countof(command)));
             hr = (count == 1) ? hr : E_FAIL;
             if (SUCCEEDED(hr))
             {
