@@ -26,7 +26,7 @@ inline HRESULT PrintEnumString(_In_ IEnumString* enumString, _In_opt_ PCWSTR pre
     HRESULT hr = S_OK;
     while (S_OK == hr)
     {
-        LPOLESTR string = nullptr;
+		CComHeapPtr<WCHAR> string;
         hr = enumString->Next(1, &string, nullptr);
 
         if (S_OK == hr)
@@ -39,7 +39,6 @@ inline HRESULT PrintEnumString(_In_ IEnumString* enumString, _In_opt_ PCWSTR pre
             {
                 wprintf(L"%s %s\n", prefixText, string);
             }
-            CoTaskMemFree(string);
         }
     }
 

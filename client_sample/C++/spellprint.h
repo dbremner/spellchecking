@@ -81,12 +81,11 @@ inline HRESULT PrintSpellingError(_In_ ISpellChecker* spellChecker, _In_ PCWSTR 
             else if (CORRECTIVE_ACTION_REPLACE == correctiveAction)
             {
                 wprintf(L"It should be autocorrected to:\n");
-                PWSTR replacement = nullptr;
+				CComHeapPtr<WCHAR> replacement;
                 hr = spellingError->get_Replacement(&replacement);
                 if (SUCCEEDED(hr))
                 {
                     wprintf(L"\t%s\n\n", replacement);
-                    CoTaskMemFree(replacement);
                 }
             }
             else if (CORRECTIVE_ACTION_DELETE == correctiveAction)
@@ -131,12 +130,11 @@ inline HRESULT PrintSpellingErrors(_In_ ISpellChecker* spellChecker, _In_ PCWSTR
 
 inline HRESULT PrintLanguage(_In_ ISpellChecker* spellChecker)
 {
-    PWSTR languageTag = nullptr;
+	CComHeapPtr<WCHAR> languageTag;
     HRESULT hr = spellChecker->get_LanguageTag(&languageTag);
     if (SUCCEEDED(hr))
     {
         wprintf(L"Language: %s\n\n", languageTag);
-        CoTaskMemFree(languageTag);
     }
 
     PrintErrorIfFailed(L"PrintLanguage", hr);
@@ -145,8 +143,8 @@ inline HRESULT PrintLanguage(_In_ ISpellChecker* spellChecker)
 
 inline HRESULT PrintSpellCheckerIdAndName(_In_ ISpellChecker* spellChecker)
 {
-    PWSTR spellCheckerId = nullptr;
-    PWSTR localizedName = nullptr;
+    CComHeapPtr<WCHAR> spellCheckerId;
+	CComHeapPtr<WCHAR> localizedName;
     HRESULT hr = spellChecker->get_Id(&spellCheckerId);
 
     if (SUCCEEDED(hr))
@@ -159,17 +157,13 @@ inline HRESULT PrintSpellCheckerIdAndName(_In_ ISpellChecker* spellChecker)
         wprintf(L"Provider: %s (%s)\n\n", spellCheckerId, localizedName);
     }
 
-    CoTaskMemFree(localizedName);
-
-    CoTaskMemFree(spellCheckerId);
-
     PrintErrorIfFailed(L"PrintSpellCheckerIdAndName", hr);
     return hr;
 }
 
 inline HRESULT PrintOptionHeading(_In_ IOptionDescription* optionDescription)
 {
-    PWSTR optionHeading = nullptr;
+	CComHeapPtr<WCHAR> optionHeading;
     HRESULT hr = optionDescription->get_Heading(&optionHeading);
     if (SUCCEEDED(hr))
     {
@@ -177,7 +171,6 @@ inline HRESULT PrintOptionHeading(_In_ IOptionDescription* optionDescription)
         {
             wprintf(L"\t%s\n", optionHeading);
         }
-        CoTaskMemFree(optionHeading);
     }
 
     PrintErrorIfFailed(L"PrintOptionHeading", hr);
@@ -186,7 +179,7 @@ inline HRESULT PrintOptionHeading(_In_ IOptionDescription* optionDescription)
 
 inline HRESULT PrintOptionDescription(_In_ IOptionDescription* optionDescription)
 {
-    PWSTR description = nullptr;
+    CComHeapPtr<WCHAR> description;
     HRESULT hr = optionDescription->get_Description(&description);
     if (SUCCEEDED(hr))
     {
@@ -194,7 +187,6 @@ inline HRESULT PrintOptionDescription(_In_ IOptionDescription* optionDescription
         {
             wprintf(L"\t%s\n", description);
         }
-        CoTaskMemFree(description);
     }
 
     PrintErrorIfFailed(L"PrintOptionDescription", hr);
@@ -203,13 +195,12 @@ inline HRESULT PrintOptionDescription(_In_ IOptionDescription* optionDescription
 
 inline HRESULT PrintSingleLabel(_Inout_ IEnumString* enumString, _In_ BYTE optionValue)
 {
-    LPOLESTR label = nullptr;
+    CComHeapPtr<OLECHAR> label;
     HRESULT hr = enumString->Next(1, &label, nullptr);
     if (S_OK == hr)
     {
         PCWSTR optionState = (optionValue == 1) ? L"on" : L"off";
         wprintf(L"\t%s (current %s)\n", label, optionState);
-        CoTaskMemFree(label);
     }
 
     PrintErrorIfFailed(L"PrintSingleLabel", hr);
@@ -222,13 +213,12 @@ inline HRESULT PrintMultipleLabels(_Inout_ IEnumString* enumString, _In_ BYTE op
 
     for (int i = 0; (S_OK == hr) ; ++i)
     {
-        LPOLESTR label = nullptr;
+		CComHeapPtr<WCHAR> label;
         hr = enumString->Next(1, &label, nullptr);
         if (S_OK == hr)
         {
             PCWSTR currentText = (optionValue == static_cast<BYTE>(i)) ? L"(current)" : L"";
             wprintf(L"\t[%d] %s %s\n", i, label, currentText);
-            CoTaskMemFree(label);
         }
     }
 
@@ -308,13 +298,12 @@ inline HRESULT PrintSpellingOptions(_In_ ISpellChecker* spellChecker)
     
     while (S_OK == hr)
     {
-        LPOLESTR optionId = nullptr;
+		CComHeapPtr<WCHAR> optionId;
         hr = enumOptionIds->Next(1, &optionId, nullptr);
         if (S_OK == hr)
         {
             hr = PrintOption(spellChecker, optionId);
             wprintf(L"\n");
-            CoTaskMemFree(optionId);
         }
     }
     wprintf(L"\n");
