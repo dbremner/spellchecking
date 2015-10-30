@@ -159,15 +159,9 @@ inline HRESULT PrintSpellCheckerIdAndName(_In_ ISpellChecker* spellChecker)
         wprintf(L"Provider: %s (%s)\n\n", spellCheckerId, localizedName);
     }
 
-    if (nullptr != localizedName)
-    {
-        CoTaskMemFree(localizedName);
-    }
+    CoTaskMemFree(localizedName);
 
-    if (nullptr != spellCheckerId)
-    {
-        CoTaskMemFree(spellCheckerId);
-    }
+    CoTaskMemFree(spellCheckerId);
 
     PrintErrorIfFailed(L"PrintSpellCheckerIdAndName", hr);
     return hr;
