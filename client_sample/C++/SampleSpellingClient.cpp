@@ -159,7 +159,7 @@ int __cdecl wmain(int argc, _In_reads_(argc) PCWSTR argv[])
     HRESULT hr = ((-1 == originalOutputMode) ? E_FAIL : S_OK);
     if (SUCCEEDED(hr))
     {
-        hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+		hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED|COINIT_DISABLE_OLE1DDE);
     }
 
     bool WasCOMInitialized = SUCCEEDED(hr);
